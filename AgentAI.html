@@ -19,16 +19,20 @@
       --glow:rgba(16,185,129,0.5);
     }
     
-    body{
+body{
       font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
-      background:var(--bg-dark);
+      background:#030712;
+      background-image: 
+        radial-gradient(circle at 20% 30%, rgba(16,185,129,0.03) 0%, transparent 50%),
+        radial-gradient(circle at 80% 70%, rgba(16,185,129,0.02) 0%, transparent 50%);
       color:#fff;
       line-height:1.6;
     }
     
-    /* Hero - Dramatic Background */
+    /* Hero - Full viewport dark */
     .hero{
       min-height:100vh;
+      width:100vw;
       display:flex;
       flex-direction:column;
       align-items:center;
@@ -37,22 +41,73 @@
       padding:8rem 2rem 4rem;
       position:relative;
       overflow:hidden;
-      background: linear-gradient(180deg,rgba(3,7,18,0.7) 0%,rgba(3,7,18,0.4) 40%,rgba(3,7,18,0.8) 100%),
-                  url('./01.avif') center/cover no-repeat;
-      z-index:0;
+      background:#030712;
     }
     
-    /* Animated gradient overlay */
+    /* Center glow */
     .hero::before{
       content:'';
       position:absolute;
-      top:0;left:0;right:0;bottom:0;
-      background: 
-        radial-gradient(ellipse at 20% 20%,rgba(16,185,129,0.12) 0%,transparent 50%),
-        radial-gradient(ellipse at 80% 80%,rgba(6,78,59,0.15) 0%,transparent 50%),
-        radial-gradient(ellipse at 50% 50%,rgba(16,185,129,0.08) 0%,transparent 70%);
-      animation:aurora 8s ease-in-out infinite alternate;
+      top:50%;left:50%;
+      width:1000px;height:700px;
+      transform:translate(-50%,-50%);
+      background: radial-gradient(ellipse,rgba(16,185,129,0.12) 0%,rgba(6,78,59,0.06) 40%,transparent 70%);
+      animation:pulse 8s ease-in-out infinite;
       pointer-events:none;
+    }
+    @keyframes pulse{
+      0%,100%{opacity:0.4;transform:translate(-50%,-50%) scale(1);}
+      50%{opacity:0.8;transform:translate(-50%,-50%) scale(1.15);}
+    }
+    
+    /* Falling light streams */
+    .hero::after{
+      content:'';
+      position:absolute;
+      top:0;left:0;right:0;bottom:0;
+      pointer-events:none;
+      background: 
+        linear-gradient(180deg,transparent 30%,rgba(16,185,129,0.03) 50%,transparent 70%);
+      animation:scan 8s linear infinite;
+      mask-image: linear-gradient(180deg,transparent 0%,rgba(0,0,0,0.3) 20%,rgba(0,0,0,0.3) 80%,transparent 100%);
+    }
+    @keyframes scan{
+      0%{transform:translateY(-100%);opacity:0;}
+      20%{opacity:1;}
+      80%{opacity:1;}
+      100%{transform:translateY(100%);opacity:0;}
+    }
+    
+    /* Flying beams - smooth and slow */
+    .fly-beam{
+      position:absolute;
+      background:#10B981;
+      border-radius:50px;
+      box-shadow:0 0 10px rgba(16,185,129,0.9),0 0 20px rgba(16,185,129,0.5);
+    }
+    .fly-h{
+      width:100px;
+      height:2px;
+      left:-120px;
+      animation:flyH 4s linear infinite;
+    }
+    @keyframes flyH{
+      0%{left:-120px;opacity:0;}
+      3%{opacity:1;}
+      97%{opacity:1;}
+      100%{left:calc(100vw + 120px);opacity:0;}
+    }
+    .fly-v{
+      width:2px;
+      height:100px;
+      top:-120px;
+      animation:flyV 4.5s linear infinite;
+    }
+    @keyframes flyV{
+      0%{top:-120px;opacity:0;}
+      3%{opacity:1;}
+      97%{opacity:1;}
+      100%{top:calc(100vh + 120px);opacity:0;}
     }
     @keyframes aurora{
       0%{opacity:0.6;transform:scale(1);}
@@ -586,7 +641,13 @@
 
   <!-- Hero -->
   <section class="hero" id="home">
-    <div class="particles">
+      <!-- Fast flying beams -->
+      <div class="fly-beam fly-h" style="top:20%;animation-delay:0s"></div>
+      <div class="fly-beam fly-h" style="top:50%;animation-delay:0.5s"></div>
+      <div class="fly-beam fly-h" style="top:80%;animation-delay:1s"></div>
+      <div class="fly-beam fly-v" style="left:25%;animation-delay:0.3s"></div>
+      <div class="fly-beam fly-v" style="left:75%;animation-delay:0.8s"></div>
+      <!-- Particles -->
       <div class="particle"></div>
       <div class="particle"></div>
       <div class="particle"></div>
