@@ -22,6 +22,9 @@
 body{
       font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
       background:#030712;
+      background-image: 
+        radial-gradient(ellipse at 50% 0%, rgba(16,185,129,0.08) 0%, transparent 50%),
+        radial-gradient(ellipse at 50% 100%, rgba(16,185,129,0.05) 0%, transparent 50%);
       color:#fff;
       line-height:1.6;
       width:100%;
@@ -61,8 +64,8 @@ body{
       content:'';
       position:absolute;
       top:0;left:0;right:0;bottom:0;
-      /* Strong gradient - dark at bottom where text is */
-      background: linear-gradient(180deg,rgba(0,0,0,0) 0%,rgba(0,0,0,0.05) 20%,rgba(0,0,0,0.2) 40%,rgba(0,0,0,0.5) 70%,rgba(0,0,0,0.75) 100%);
+      /* Light gradient - dark at bottom where text is */
+      background: linear-gradient(180deg,rgba(0,0,0,0) 0%,rgba(0,0,0,0.02) 20%,rgba(0,0,0,0.1) 40%,rgba(0,0,0,0.25) 70%,rgba(0,0,0,0.4) 100%);
       pointer-events:none;
       z-index:3;
     }
@@ -75,6 +78,7 @@ body{
       object-fit:cover;
       object-position:center top;
       z-index:0;
+      transition:opacity 0.3s ease;
     }
     
     .hero-bg{
@@ -109,34 +113,8 @@ body{
       display:inline-block;
     }
     
-    /* Decorative lines around title */
-    .hero h1::before,
-    .hero h1::after{
-      content:'';
-      position:absolute;
-      width:80px;
-      height:2px;
-      background:linear-gradient(90deg,transparent,var(--neon-green),transparent);
-      animation:lineGlow 2s ease-in-out infinite;
-    }
-    .hero h1::before{
-      top:-20px;
-      left:50%;
-      transform:translateX(-50%);
-    }
-    .hero h1::after{
-      bottom:-15px;
-      left:50%;
-      transform:translateX(-50%);
-      animation-delay:0.5s;
-    }
-    @keyframes lineGlow{
-      0%,100%{opacity:0.3;width:60px;}
-      50%{opacity:1;width:120px;}
-    }
-    
-    .hero h1{
-      background:linear-gradient(90deg,rgba(255,255,255,0.8) 0%,rgba(255,255,255,1) 40%,rgba(255,255,255,1) 60%,rgba(255,255,255,0.8) 100%);
+    .hero h1, .section-header h2, .stats-box-title, .problems-title{
+      background:linear-gradient(90deg,rgba(255,255,255,0.85) 0%,rgba(255,255,255,1) 40%,rgba(255,255,255,1) 60%,rgba(255,255,255,0.85) 100%);
       background-size:200% 100%;
       -webkit-background-clip:text;
       background-clip:text;
@@ -289,13 +267,20 @@ body{
     /* Section */
     section{padding:5rem 2rem;max-width:1200px;margin:0 auto;}
     .section-header{text-align:center;margin-bottom:3rem;}
-    .section-header h2{
+    .section-header h2, .stats-box-title, .problems-title{
       font-size:2.5rem;
       font-weight:800;
       margin-bottom:1rem;
       letter-spacing:-0.02em;
+      background:linear-gradient(90deg,rgba(255,255,255,0.85) 0%,rgba(255,255,255,1) 40%,rgba(255,255,255,1) 60%,rgba(255,255,255,0.85) 100%);
+      background-size:200% 100%;
+      -webkit-background-clip:text;
+      background-clip:text;
+      color:transparent;
+      animation:gradientMove 4s linear infinite;
+      -webkit-text-fill-color:transparent;
     }
-    .section-header p{color:rgba(255,255,255,0.6);font-size:1.1rem;}
+    .section-header p{color:rgba(255,255,255,0.55);font-size:1.1rem;text-shadow:0 1px 4px rgba(0,0,0,0.3);}
     
     /* Two Column Stats + Problems */
     .stats-problems-grid{
@@ -388,8 +373,9 @@ body{
       font-weight:700;
       text-transform:uppercase;
       letter-spacing:0.05em;
+      opacity:0.9;
     }
-    .problem-item p{color:rgba(255,255,255,0.7);font-size:.85rem;}
+    .problem-item p{color:rgba(255,255,255,0.6);font-size:.85rem;}
     
     /* Feature Cards */
     .features-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1.5rem;}
@@ -426,8 +412,9 @@ body{
       font-size:1.3rem;
       margin-bottom:0.75rem;
       font-weight:700;
+      color:rgba(255,255,255,0.9);
     }
-    .feature-card p{color:rgba(255,255,255,0.7);font-size:.95rem;line-height:1.6;}
+    .feature-card p{color:rgba(255,255,255,0.6);font-size:.95rem;line-height:1.6;}
     
     /* Architecture Cards */
     .arch-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;}
@@ -451,7 +438,7 @@ body{
     .arch-card h3{
       font-size:1.1rem;
       margin-bottom:0.75rem;
-      color:var(--neon-green-light);
+      color:rgba(52,211,153,0.9);
       font-weight:600;
     }
     .arch-card p{color:rgba(255,255,255,0.6);font-size:.9rem;}
@@ -610,7 +597,37 @@ body{
 
   <!-- Hero -->
   <section class="hero" id="home">
-    <img src="public/video-loading.png" class="hero-bg-img" alt=""/>
+    <video src="public/video-loading.mp4" class="hero-bg-img" autoplay muted playsinline id="bgVideo1" poster="public/video-loading.png"></video>
+<video src="public/video-loading.mp4" class="hero-bg-img" style="opacity:0" autoplay muted playsinline id="bgVideo2" poster="public/video-loading.png"></video>
+<img src="public/video-loading.png" class="hero-bg-img" style="z-index:-1" alt=""/>
+<script>
+const v1=document.getElementById('bgVideo1');
+const v2=document.getElementById('bgVideo2');
+v1.addEventListener('ended',function(){
+  v2.style.transition='opacity 0.3s ease';
+  v2.style.opacity=1;
+  v2.currentTime=0;
+  v2.play();
+  setTimeout(()=>{
+    v1.style.transition='opacity 0.3s ease';
+    v1.style.opacity=0;
+    v1.currentTime=0;
+    v1.play();
+  },200);
+});
+v2.addEventListener('ended',function(){
+  v1.style.transition='opacity 0.3s ease';
+  v1.style.opacity=1;
+  v1.currentTime=0;
+  v1.play();
+  setTimeout(()=>{
+    v2.style.transition='opacity 0.3s ease';
+    v2.style.opacity=0;
+    v2.currentTime=0;
+    v2.play();
+  },200);
+});
+</script>
     <div class="hero-content">
       <h1 style="font-size:clamp(2.5rem,5vw,4.5rem);font-weight:900;line-height:1.1;margin-bottom:0.5rem;margin-top:10rem;color:rgba(255,255,255,0.8);text-shadow:0 4px 50px rgba(0,0,0,1);"><span>Building Trustworthy AI Autonomy</span></h1>
       <p style="font-size:clamp(0.8rem,1vw,1rem);color:rgba(255,255,255,0.8);max-width:600px;text-shadow:0 2px 15px rgba(0,0,0,0.9);">The next-generation AI infrastructure for the modular, scalable, and decentralized future.</p>
