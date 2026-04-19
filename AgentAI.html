@@ -255,7 +255,7 @@ body{
       letter-spacing:.2em;
       font-weight:600;
     }
-    .logos{display:flex;gap:4rem;animation:marquee 30s linear infinite;white-space:nowrap;overflow-x:hidden;}
+    .logos{display:flex;width:max-content;gap:4rem;animation:marquee 100s linear infinite;}
     .logos span{
       font-size:1.5rem;
       font-weight:700;
@@ -264,9 +264,13 @@ body{
       letter-spacing:0.05em;
       transition:all .3s;
       flex-shrink:0;
+      padding:0 1rem;
     }
     .logos span:hover{color:var(--neon-green);text-shadow:0 0 20px rgba(16,185,129,0.8);}
-    @keyframes marquee{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+    @keyframes marquee{0%{transform:translateX(0)}100%{transform:translateX(-33.33%)}}
+    
+    /* 修复赞助商容器 */
+    .partnership .logos{white-space:nowrap;overflow:visible;}
     
     /* Section */
     section{padding:5rem 2rem;max-width:1200px;margin:0 auto;}
@@ -591,7 +595,9 @@ body{
       .hero p{font-size:clamp(0.7rem,2vw,0.9rem);}
       .section-header h2,.stats-box-title,.problems-title{font-size:1.5rem;}
       .feature-card,.arch-card{padding:1rem;}
-      .partnership .logos{animation:marquee 20s linear infinite;}
+      .partnership{padding:3rem 0;margin:1rem 0;}
+      .partnership .logos{animation:marquee 80s linear infinite;white-space:nowrap;overflow:visible;width:max-content;}
+      .partnership h2{margin-bottom:1.5rem;}
       .stat-row{flex-wrap:wrap;text-align:center;justify-content:center;}
       section,.stats-problems-grid,.features-grid,.arch-grid{padding:3rem 1rem;}
     }
@@ -697,30 +703,9 @@ v2.addEventListener('ended',function(){
   <div class="partnership">
     <h2>Strategic Partners & Investors</h2>
     <div class="logos">
-      <span>Binance Labs</span>
-      <span>Coinbase Ventures</span>
-      <span>a16z crypto</span>
-      <span>Sequoia Capital</span>
-      <span>Paradigm</span>
-      <span>Multicoin Capital</span>
-      <span>Animoca Brands</span>
-      <span>Framework Ventures</span>
-      <span>Electric Capital</span>
-      <span>Pantera Capital</span>
-      <span>Dragonfly Capital</span>
-      <span>Placeholder VC</span>
-      <span>Binance Labs</span>
-      <span>Coinbase Ventures</span>
-      <span>a16z crypto</span>
-      <span>Sequoia Capital</span>
-      <span>Paradigm</span>
-      <span>Multicoin Capital</span>
-      <span>Animoca Brands</span>
-      <span>Framework Ventures</span>
-      <span>Electric Capital</span>
-      <span>Pantera Capital</span>
-      <span>Dragonfly Capital</span>
-      <span>Placeholder VC</span>
+      <span>Binance Labs</span><span>Coinbase Ventures</span><span>a16z crypto</span><span>Sequoia Capital</span><span>Paradigm</span><span>Multicoin Capital</span><span>Animoca Brands</span><span>Framework Ventures</span><span>Electric Capital</span><span>Pantera Capital</span><span>Dragonfly Capital</span><span>Placeholder VC</span>
+      <span>Binance Labs</span><span>Coinbase Ventures</span><span>a16z crypto</span><span>Sequoia Capital</span><span>Paradigm</span><span>Multicoin Capital</span><span>Animoca Brands</span><span>Framework Ventures</span><span>Electric Capital</span><span>Pantera Capital</span><span>Dragonfly Capital</span><span>Placeholder VC</span>
+      <span>Binance Labs</span><span>Coinbase Ventures</span><span>a16z crypto</span><span>Sequoia Capital</span><span>Paradigm</span><span>Multicoin Capital</span><span>Animoca Brands</span><span>Framework Ventures</span><span>Electric Capital</span><span>Pantera Capital</span><span>Dragonfly Capital</span><span>Placeholder VC</span>
     </div>
   </div>
 
