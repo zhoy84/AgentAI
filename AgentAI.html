@@ -8,7 +8,8 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
     *{margin:0;padding:0;box-sizing:border-box;}
-    html{scroll-behavior:smooth;width:100vw;overflow-x:hidden;}
+    html{scroll-behavior:smooth;width:100%;max-width:100%;overflow-x:hidden;}
+    body{width:100%;max-width:100%;overflow:hidden;}
     
     :root{
       --neon-green:#10B981;
@@ -34,6 +35,7 @@ body{
     /* Hero - Full viewport dark */
     .hero{
       min-height:100vh;
+      min-height:100dvh;
       min-width:100vw;
       width:100vw;
       display:flex;
@@ -73,7 +75,7 @@ body{
     .hero-bg-img{
       position:absolute;
       top:0;left:0;
-      width:100vw;
+      width:100%;
       height:100vh;
       object-fit:cover;
       object-position:center top;
@@ -239,6 +241,7 @@ body{
     .partnership{
       text-align:center;
       padding:4rem 0;
+      margin:2rem 0;
       background:rgba(3,7,18,0.95);
       overflow:hidden;
       border-top:1px solid rgba(16,185,129,0.15);
@@ -252,7 +255,7 @@ body{
       letter-spacing:.2em;
       font-weight:600;
     }
-    .logos{display:flex;gap:4rem;animation:marquee 30s linear infinite;}
+    .logos{display:flex;gap:4rem;animation:marquee 30s linear infinite;white-space:nowrap;overflow-x:hidden;}
     .logos span{
       font-size:1.5rem;
       font-weight:700;
@@ -260,6 +263,7 @@ body{
       white-space:nowrap;
       letter-spacing:0.05em;
       transition:all .3s;
+      flex-shrink:0;
     }
     .logos span:hover{color:var(--neon-green);text-shadow:0 0 20px rgba(16,185,129,0.8);}
     @keyframes marquee{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
@@ -570,9 +574,32 @@ body{
       .core-card{grid-template-columns:1fr;text-align:center;}
       .core-blocks{justify-content:center;}
     }
-    @media(max-width:768px){
+    /* Mobile responsive */
+    @media(max-width:900px){
+      .stats-problems-grid{grid-template-columns:1fr;}
+      .problems,.features-grid,.arch-grid{grid-template-columns:1fr;}
+      .core-card{grid-template-columns:1fr;text-align:center;gap:2rem;}
+      .core-blocks{justify-content:center;flex-wrap:wrap;}
+    }
+@media(max-width:768px){
+      html,body{overflow-y:auto;overflow-x:hidden;}
       .nav-menu{display:none;}
-      .footer-content{justify-content:center;text-align:center;}
+      .hero{min-height:100vh;min-height:-webkit-fill-available;width:100%;overflow-x:hidden;}
+      .hero-bg-img{height:100vh;min-height:100vh;}
+      .hero h1{font-size:clamp(1.5rem,5vw,2.5rem);margin-top:6rem;}
+      .hero p{font-size:clamp(0.7rem,2vw,0.9rem);}
+      .section-header h2,.stats-box-title,.problems-title{font-size:1.5rem;}
+      .feature-card,.arch-card{padding:1rem;}
+      .partnership .logos{animation:marquee 20s linear infinite;}
+      .stat-row{flex-wrap:wrap;text-align:center;justify-content:center;}
+      section,.stats-problems-grid,.features-grid,.arch-grid{padding:3rem 1rem;}
+    }
+    @media(max-width:480px){
+      .core-card{padding:2rem 1rem;}
+      .core-blocks{gap:1rem;}
+      .core-block{width:70px;height:70px;}
+      .core-block-icon{font-size:1.8rem;}
+      .core-block-label{font-size:.7rem;}
     }
   </style>
 </head>
@@ -599,6 +626,17 @@ body{
   <section class="hero" id="home">
     <video src="public/video-loading.mp4" class="hero-bg-img" autoplay muted playsinline id="bgVideo1" poster="public/video-loading.png"></video>
 <video src="public/video-loading.mp4" class="hero-bg-img" style="opacity:0" autoplay muted playsinline id="bgVideo2" poster="public/video-loading.png"></video>
+<script>
+function setHeroHeight(){
+  if(window.innerWidth<=768){
+    document.querySelector('.hero').style.height=window.innerHeight+'px';
+  }else{
+    document.querySelector('.hero').style.height='auto';
+  }
+}
+window.addEventListener('resize',setHeroHeight);
+setHeroHeight();
+</script>
 <img src="public/video-loading.png" class="hero-bg-img" style="z-index:-1" alt=""/>
 <script>
 const v1=document.getElementById('bgVideo1');
