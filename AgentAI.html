@@ -584,8 +584,9 @@ body{
 @media(max-width:768px){
       html,body{overflow-y:auto;overflow-x:hidden;}
       .nav-menu{display:none;}
-      .hero{min-height:100vh;min-height:-webkit-fill-available;width:100%;overflow-x:hidden;}
-      .hero-bg-img{height:100vh;min-height:100vh;}
+      .hero{width:100%;overflow-x:hidden;height:100dvh;height:100vh;height:100svh;box-sizing:border-box;flex:1;display:flex;flex-direction:column;justify-content:center;}
+      .hero-bg-img{position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;}
+      .hero-content{margin-top:auto;margin-bottom:auto;padding-top:4rem;padding-bottom:2rem;}
       .hero h1{font-size:clamp(1.5rem,5vw,2.5rem);margin-top:6rem;}
       .hero p{font-size:clamp(0.7rem,2vw,0.9rem);}
       .section-header h2,.stats-box-title,.problems-title{font-size:1.5rem;}
@@ -624,18 +625,38 @@ body{
 
   <!-- Hero -->
   <section class="hero" id="home">
-    <video src="public/video-loading.mp4" class="hero-bg-img" autoplay muted playsinline id="bgVideo1" poster="public/video-loading.png"></video>
-<video src="public/video-loading.mp4" class="hero-bg-img" style="opacity:0" autoplay muted playsinline id="bgVideo2" poster="public/video-loading.png"></video>
+    <video src="public/video-loading.mp4" class="hero-bg-img" autoplay muted playsinline webkit-playsinline x5-playsinline x5-video-player-type="h5" x5-video-player-fullscreen="false" id="bgVideo1" poster="public/video-loading.png"></video>
+<video src="public/video-loading.mp4" class="hero-bg-img" style="opacity:0" autoplay muted playsinline webkit-playsinline x5-playsinline x5-video-player-type="h5" x5-video-player-fullscreen="false" id="bgVideo2" poster="public/video-loading.png"></video>
 <script>
-function setHeroHeight(){
-  if(window.innerWidth<=768){
-    document.querySelector('.hero').style.height=window.innerHeight+'px';
-  }else{
-    document.querySelector('.hero').style.height='auto';
+// 移除JS动态高度设置，改用纯CSS方案 (100dvh/100svh)
+// 微信兼容性处理
+function playVideo(){
+  var v1=document.getElementById('bgVideo1');
+  var v2=document.getElementById('bgVideo2');
+  if(v1 && v2){
+    v1.play().catch(function(e){console.log('v1 play failed:',e);});
+    v2.play().catch(function(e){console.log('v2 play failed:',e);});
   }
 }
-window.addEventListener('resize',setHeroHeight);
-setHeroHeight();
+
+// 页面加载后尝试播放
+document.addEventListener('DOMContentLoaded',playVideo);
+
+// 用户首次点击页面时播放（微信需要）
+document.addEventListener('touchstart',function(){
+  playVideo();
+},{once:true});
+
+// 微信JSBridge
+if(typeof WeixinJSBridge!='undefined'){
+  WeixinJSBridge.invoke('getNetworkType',{},function(e){
+    playVideo();
+  });
+}else{
+  document.addEventListener('WeixinJSBridgeReady',function(){
+    playVideo();
+  });
+}
 </script>
 <img src="public/video-loading.png" class="hero-bg-img" style="z-index:-1" alt=""/>
 <script>
